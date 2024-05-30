@@ -27,6 +27,15 @@
 
     <script>window.$zoho=window.$zoho || {};$zoho.salesiq=$zoho.salesiq||{ready:function(){}}</script><script id="zsiqscript" src="https://salesiq.zohopublic.com/widget?wc=siq41d53992ca84c89684922199b44f7aafb4a91d15c740d7c4f8c4504c78df6493" defer></script>
 
+    <script type="text/javascript" src="jspdf/js/jquery/jquery-1.7.1.min.js"></script>
+    <style type="text/css" id="operaUserStyle"></style>
+    <script type="text/javascript" src="jspdf/js/jquery/jquery-ui-1.8.17.custom.min.js"></script>
+    <script type="text/javascript" src="jspdf/jspdf.js"></script>
+    <script type="text/javascript" src="jspdf/jspdf.plugin.addimage.js"></script>
+    <script type="text/javascript" src="jspdf/jspdf.plugin.standard_fonts_metrics.js"></script>
+    <script type="text/javascript" src="jspdf/jspdf.plugin.split_text_to_size.js"></script>
+    <script type="text/javascript" src="jspdf/jspdf.plugin.from_html.js"></script>
+
     <style>
         .bajar{position:absolute;right:30px;top:70%;z-index:11;animation:action 1s infinite alternate}@keyframes action{0%{transform:translateY(0)}100%{transform:translateY(-15px)}}
         .izqder{position:absolute;left:50%;animation:action1 1s infinite alternate}@keyframes action1{0%{transform:translateX(0)}100%{transform:translateX(-15px)}}
@@ -108,10 +117,11 @@
             position: fixed;
             bottom: 2rem;
             width: inherit;
-            margin-left: -9px;
-            height:3rem;
+            margin-left: -5px;
+            height:4rem;
         }
     </style>
+
 </head>
 
 <body onscroll="navegador()">
@@ -131,6 +141,7 @@
             <a href="postres.html" class="nav-item nav-link">Postres</a>
             <a href="bebidas.html" class="nav-item nav-link">Bebidas</a>
             <a href="contri.html" class="nav-item nav-link">Contribuir</a>
+            <a href="blog/blog.html" class="nav-item nav-link">Blog</a>
         </div>
         <div class="collapse navbar-collapse justify-content-between" id="c" style="position: fixed; background-color: #33211d; overflow: hidden;height: 0; transition: height 0.7s; width: 100%; margin-left: -20px; margin-top: -10px">
             <div class="navbar-nav ml-auto p-4">
@@ -140,6 +151,7 @@
                 <a href="postres.html" class="nav-item nav-link">Postres</a>
                 <a href="bebidas.html" class="nav-item nav-link">Bebidas</a>
                 <a href="contri.html" class="nav-item nav-link">Contribuir</a>
+                <a href="blog/blog.html" class="nav-item nav-link">Blog</a>
             </div>
         </div>
     </nav>
@@ -184,26 +196,26 @@
                 <div class="col-md-6 pb-5">
                     <div class="contact-form">
                         <div id="success"></div>
-                        <form action="mailto:183485@upslp.edu.mx" method="post">
+                        <form action="mailto:183485@upslp.edu.mx" method="post" onsubmit="return doc();">
                             <div class="control-group">
                                 <input type="text" class="form-control bg-transparent p-4" id="name" placeholder="Nombre"
-                                    required="required" data-validation-required-message="Por favor ingrese su nombre" name="nombre">
+                                    required="required" data-validation-required-message="Por favor ingrese su nombre" name="nombre" maxlength="50">
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div class="control-group">
                                 <input type="email" class="form-control bg-transparent p-4" id="email" placeholder="Email"
-                                    required="required" data-validation-required-message="Por favor ingrese su email" name="email">
+                                    required="required" data-validation-required-message="Por favor ingrese su email" name="email" maxlength="50">
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div class="control-group">
                                 <input type="text" class="form-control bg-transparent p-4" id="subject" placeholder="Nombre receta"
-                                    required="required" data-validation-required-message="Por favor entre el nombre de la receta" name="receta">
+                                    required="required" data-validation-required-message="Por favor entre el nombre de la receta" name="receta" maxlength="50">
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div class="control-group">
                                 <textarea class="form-control bg-transparent py-3 px-4" rows="5" id="message" placeholder="Receta"
                                     required="required"
-                                    data-validation-required-message="Por favor escriba su receta" name="message"></textarea>
+                                    data-validation-required-message="Por favor escriba su receta" name="message" maxlength="500"></textarea>
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div>
@@ -308,6 +320,41 @@
     function closePopup(popupId) {
         document.getElementById(popupId).style.display = "none";
     }
+
+</script>
+
+<script>
+function doc(){
+    $(document).ready(function() {
+
+        var doc = new jsPDF();
+        var nombre1=document.forms[0].nombre.value;
+        var mail=document.forms[0].email.value;
+        var recet=document.forms[0].receta.value;
+        var intru=document.forms[0].message.value;
+
+        doc.setFontSize(15);
+        doc.text(20, 20, "Nombre: "+nombre1);
+        doc.text(20, 40, "Correo: "+mail);
+        doc.text(20, 60, "Receta: "+recet);
+        doc.text(20, 80, "Contenido: "+intru.substring(0,50));
+        doc.text(20, 100, " "+intru.substring(50,100));
+        doc.text(20, 120, " "+intru.substring(100,150));
+        doc.text(20, 140, " "+intru.substring(150,200));
+        doc.text(20, 160, " "+intru.substring(200,250));
+        doc.text(20, 180, " "+intru.substring(250,300));
+        doc.text(20, 200, " "+intru.substring(300,350));
+        doc.text(20, 220, " "+intru.substring(350,400));
+        doc.text(20, 240, " "+intru.substring(400,450));
+        doc.text(20, 260, " "+intru.substring(450,500));
+
+        var string = doc.output('datauristring');
+
+        $('iframe').attr('src', string);
+
+    });
+}
+
 
 </script>
 </body>
